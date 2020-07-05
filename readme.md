@@ -41,6 +41,11 @@ mv rke_linux-amd64 rke
 chmod +x rke
 
 
+# install kubectl
+wget https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
+chmod +x kubectl
+
+
 # install helm
 wget https://get.helm.sh/helm-v3.2.3-linux-amd64.tar.gz
 tar -zxvf helm*.tar.gz
@@ -50,7 +55,7 @@ cd ..
 
 
 # provision
-terraform init
+bin/terraform init
 bin/terraform apply -target module.rke
 
 ips=(10.20.20.11 10.20.20.12 10.20.20.13 10.20.20.21 10.20.20.22 10.20.20.31 10.20.20.32 10.20.20.33)
@@ -87,6 +92,6 @@ microstack.openstack server start worker2
 microstack.openstack server start worker3
 
 export KUBECONFIG=$(pwd)/targets/rke/kube_config_cluster.yml
-kubectl top nodes
+bin/kubectl top nodes
 bin/helm list
 ```
