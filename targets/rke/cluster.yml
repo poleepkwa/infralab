@@ -66,6 +66,7 @@ nodes:
     role: [worker]
     ssh_key_path: id_microstack
     labels:
+      role: worker
       node: worker1
 
   - address: 10.20.20.32
@@ -74,6 +75,7 @@ nodes:
     role: [worker]
     ssh_key_path: id_microstack
     labels:
+      role: worker
       node: worker2
 
   - address: 10.20.20.33
@@ -82,6 +84,7 @@ nodes:
     role: [worker]
     ssh_key_path: id_microstack
     labels:
+      role: worker
       node: worker3
 
 services:
