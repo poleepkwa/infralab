@@ -1,0 +1,92 @@
+cluster_name: rke
+
+# https://github.com/rancher/rke/releases
+kubernetes_version: "v1.15.12-rancher2-2"
+
+network:
+  plugin: canal
+  options:
+    canal_iface: eth0
+    canal_flannel_backend_type: vxlan
+
+ingress:
+  provider: nginx
+  options:
+    use-forwarded-headers: 'true'
+  node_selector:
+    role: worker
+
+nodes:
+  # etcd nodes
+  - address: 10.20.20.11
+    internal_address: 10.164.0.11
+    user: centos
+    role: [etcd]
+    ssh_key_path: id_microstack
+    labels:
+      node: etcd1
+
+  - address: 10.20.20.12
+    internal_address: 10.164.0.12
+    user: centos
+    role: [etcd]
+    ssh_key_path: id_microstack
+    labels:
+      node: etcd2
+
+  - address: 10.20.20.13
+    internal_address: 10.164.0.13
+    user: centos
+    role: [etcd]
+    ssh_key_path: id_microstack
+    labels:
+      node: etcd3
+
+  # control nodes
+  - address: 10.20.20.21
+    internal_address: 10.164.0.21
+    user: centos
+    role: [controlplane]
+    ssh_key_path: id_microstack
+    labels:
+      node: control1
+
+  - address: 10.20.20.22
+    internal_address: 10.164.0.22
+    user: centos
+    role: [controlplane]
+    ssh_key_path: id_microstack
+    labels:
+      node: control2
+
+  # worker nodes
+  - address: 10.20.20.31
+    internal_address: 10.164.0.31
+    user: centos
+    role: [worker]
+    ssh_key_path: id_microstack
+    labels:
+      node: worker1
+
+  - address: 10.20.20.32
+    internal_address: 10.164.0.32
+    user: centos
+    role: [worker]
+    ssh_key_path: id_microstack
+    labels:
+      node: worker2
+
+  - address: 10.20.20.33
+    internal_address: 10.164.0.33
+    user: centos
+    role: [worker]
+    ssh_key_path: id_microstack
+    labels:
+      node: worker3
+
+services:
+  etcd:
+    snapshot: true
+    creation: 6h
+    retention: 24h
+

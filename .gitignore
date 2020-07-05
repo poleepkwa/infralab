@@ -1,0 +1,10 @@
+bin/*
+id_microstack
+.terraform/*
+terraform.tfstate
+terraform.tfstate.backup
+
+targets/rke/kube_config_cluster.yml
+targets/rke/cluster.rkestate
+
+*.qcow2
